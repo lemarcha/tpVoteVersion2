@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS VOTE;
+DROP TABLE IF EXISTS utilisateur;
+
+CREATE TABLE VOTE (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      ddn DATE NOT NULL,
+      candidatForVote VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE utilisateur (
+     idUtilisateur INT AUTO_INCREMENT PRIMARY KEY,
+     pseudo VARCHAR(255),
+     mdp VARCHAR(255),
+     roles VARCHAR(255)
+);
+

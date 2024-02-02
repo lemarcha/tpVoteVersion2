@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>UtilisateurRepository.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+UtilisateurRepository.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">fr</span><span class="s2">.</span><span class="s1">eni</span><span class="s2">.</span><span class="s1">tp</span><span class="s2">.</span><span class="s1">tpvote</span><span class="s2">.</span><span class="s1">ihm</span><span class="s2">;</span>
+
+
+<span class="s0">import </span><span class="s1">fr</span><span class="s2">.</span><span class="s1">eni</span><span class="s2">.</span><span class="s1">tp</span><span class="s2">.</span><span class="s1">tpvote</span><span class="s2">.</span><span class="s1">bo</span><span class="s2">.</span><span class="s1">Utilisateur</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">beans</span><span class="s2">.</span><span class="s1">factory</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">Autowired</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">jdbc</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">BeanPropertyRowMapper</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">jdbc</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">JdbcTemplate</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">jdbc</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">RowMapper</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">jdbc</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">namedparam</span><span class="s2">.</span><span class="s1">BeanPropertySqlParameterSource</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">jdbc</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">namedparam</span><span class="s2">.</span><span class="s1">MapSqlParameterSource</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">jdbc</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">namedparam</span><span class="s2">.</span><span class="s1">NamedParameterJdbcTemplate</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">jdbc</span><span class="s2">.</span><span class="s1">support</span><span class="s2">.</span><span class="s1">GeneratedKeyHolder</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">jdbc</span><span class="s2">.</span><span class="s1">support</span><span class="s2">.</span><span class="s1">KeyHolder</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">stereotype</span><span class="s2">.</span><span class="s1">Repository</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+<span class="s1">@Repository</span>
+<span class="s0">public class </span><span class="s1">UtilisateurRepository </span><span class="s2">{</span>
+
+<span class="s3">//  requete pour recuperer les utilisateur</span>
+	<span class="s0">final </span><span class="s1">String SELECT </span><span class="s2">= </span><span class="s4">&quot;SELECT * FROM utilisateur&quot;</span><span class="s2">;</span>
+
+<span class="s3">//  insertion d'un utilisateur'</span>
+	<span class="s0">final </span><span class="s1">String INSERT </span><span class="s2">= </span><span class="s4">&quot;INSERT INTO utilisateur(pseudo,mdp,roles) VALUES(:pseudo,:mdp,:roles)&quot;</span><span class="s2">;</span>
+	<span class="s0">final </span><span class="s1">String SELECT_BY_PSEUDO </span><span class="s2">= </span><span class="s4">&quot;SELECT * FROM utilisateur WHERE pseudo=:pseudo&quot;</span><span class="s2">;</span>
+	
+	<span class="s1">@Autowired</span>
+	<span class="s1">JdbcTemplate jdbcTemplate</span><span class="s2">;</span>
+	
+	<span class="s1">@Autowired</span>
+	<span class="s1">NamedParameterJdbcTemplate namedParameterJdbcTemplate</span><span class="s2">;</span>
+
+	<span class="s1">RowMapper</span><span class="s2">&lt;</span><span class="s1">Utilisateur</span><span class="s2">&gt; </span><span class="s1">mapper </span><span class="s2">= (</span><span class="s1">rs</span><span class="s2">, </span><span class="s1">i</span><span class="s2">) </span><span class="s1">-&gt; </span><span class="s0">new </span><span class="s1">Utilisateur</span><span class="s2">(</span><span class="s1">rs</span><span class="s2">.</span><span class="s1">getInt</span><span class="s2">(</span><span class="s4">&quot;idUtilisateur&quot;</span><span class="s2">), </span><span class="s1">rs</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;pseudo&quot;</span><span class="s2">),</span>
+			<span class="s1">rs</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;mdp&quot;</span><span class="s2">),</span><span class="s1">rs</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;roles&quot;</span><span class="s2">));</span>
+
+
+	<span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Utilisateur</span><span class="s2">&gt; </span><span class="s1">getAll</span><span class="s2">() {</span>
+		<span class="s0">return </span><span class="s1">jdbcTemplate</span><span class="s2">.</span><span class="s1">query</span><span class="s2">(</span><span class="s1">SELECT</span><span class="s2">, </span><span class="s1">mapper</span><span class="s2">);</span>
+	<span class="s2">}</span>
+
+	<span class="s0">public void </span><span class="s1">insert</span><span class="s2">(</span><span class="s1">Utilisateur utilisateur</span><span class="s2">) {</span>
+		<span class="s1">KeyHolder keyHolder </span><span class="s2">= </span><span class="s0">new </span><span class="s1">GeneratedKeyHolder</span><span class="s2">();</span>
+        <span class="s1">BeanPropertySqlParameterSource namedParameters </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BeanPropertySqlParameterSource</span><span class="s2">(</span><span class="s1">utilisateur</span><span class="s2">);</span>
+        <span class="s1">namedParameterJdbcTemplate</span><span class="s2">.</span><span class="s1">update</span><span class="s2">(</span><span class="s1">INSERT</span><span class="s2">, </span><span class="s1">namedParameters</span><span class="s2">,</span><span class="s1">keyHolder</span><span class="s2">);</span>
+        <span class="s1">utilisateur</span><span class="s2">.</span><span class="s1">setIdUtilisateur</span><span class="s2">(</span><span class="s1">keyHolder</span><span class="s2">.</span><span class="s1">getKey</span><span class="s2">().</span><span class="s1">intValue</span><span class="s2">());</span>
+	<span class="s2">}</span>
+
+	<span class="s0">public </span><span class="s1">Utilisateur findByPseudo</span><span class="s2">(</span><span class="s1">String pseudo</span><span class="s2">) {</span>
+		<span class="s1">MapSqlParameterSource namedParameters </span><span class="s2">= </span><span class="s0">new </span><span class="s1">MapSqlParameterSource</span><span class="s2">();</span>
+		<span class="s1">namedParameters</span><span class="s2">.</span><span class="s1">addValue</span><span class="s2">(</span><span class="s4">&quot;pseudo&quot;</span><span class="s2">, </span><span class="s1">pseudo</span><span class="s2">);</span>
+		<span class="s1">Utilisateur utilisateur </span><span class="s2">= </span><span class="s1">namedParameterJdbcTemplate</span><span class="s2">.</span><span class="s1">queryForObject</span><span class="s2">(</span><span class="s1">SELECT_BY_PSEUDO</span><span class="s2">,</span><span class="s1">namedParameters</span><span class="s2">, </span><span class="s0">new </span><span class="s1">BeanPropertyRowMapper</span><span class="s2">&lt;&gt;(</span><span class="s1">Utilisateur</span><span class="s2">.</span><span class="s0">class</span><span class="s2">));</span>
+		<span class="s0">return </span><span class="s1">utilisateur</span><span class="s2">;</span>
+	<span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

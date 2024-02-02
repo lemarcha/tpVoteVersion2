@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/accueil.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<p data-th-text="${#ctx.session.currentUser != null} ? ${#ctx.session.currentUser} : 'Non connecté!'"/>
+<H1>Accueil</H1>
+<a data-th-href="@{/}" >Accueil</a>
+<a data-th-href="@{/vote}" >Vote</a>
+<a data-th-href="@{/login}" >Login</a>
+<a data-th-href="@{/logout}" >Logout</a>
+
+<div data-th-each="utilisateur : ${utilisateurs}">
+	<span data-th-text="${utilisateur.pseudo}"/>
+	<span data-th-text="${utilisateur.roles}"/>
+	<span data-th-text="${utilisateur.mdp}"/>
+</div> 
+</body>
+</html>

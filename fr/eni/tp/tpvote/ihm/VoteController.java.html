@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>VoteController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+VoteController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">fr</span><span class="s2">.</span><span class="s1">eni</span><span class="s2">.</span><span class="s1">tp</span><span class="s2">.</span><span class="s1">tpvote</span><span class="s2">.</span><span class="s1">ihm</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">fr</span><span class="s2">.</span><span class="s1">eni</span><span class="s2">.</span><span class="s1">tp</span><span class="s2">.</span><span class="s1">tpvote</span><span class="s2">.</span><span class="s1">bll</span><span class="s2">.</span><span class="s1">VoteServiceException</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">fr</span><span class="s2">.</span><span class="s1">eni</span><span class="s2">.</span><span class="s1">tp</span><span class="s2">.</span><span class="s1">tpvote</span><span class="s2">.</span><span class="s1">bll</span><span class="s2">.</span><span class="s1">interfaces</span><span class="s2">.</span><span class="s1">VoteService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">fr</span><span class="s2">.</span><span class="s1">eni</span><span class="s2">.</span><span class="s1">tp</span><span class="s2">.</span><span class="s1">tpvote</span><span class="s2">.</span><span class="s1">bo</span><span class="s2">.</span><span class="s1">Candidat</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">fr</span><span class="s2">.</span><span class="s1">eni</span><span class="s2">.</span><span class="s1">tp</span><span class="s2">.</span><span class="s1">tpvote</span><span class="s2">.</span><span class="s1">bo</span><span class="s2">.</span><span class="s1">Vote</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">validation</span><span class="s2">.</span><span class="s1">Valid</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">beans</span><span class="s2">.</span><span class="s1">factory</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">Autowired</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">Authentication</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">stereotype</span><span class="s2">.</span><span class="s1">Controller</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">validation</span><span class="s2">.</span><span class="s1">BindingResult</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">bind</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.*;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+<span class="s1">@Controller</span>
+<span class="s1">@RequestMapping</span><span class="s2">(</span><span class="s3">&quot;/vote&quot;</span><span class="s2">)</span>
+<span class="s0">public class </span><span class="s1">VoteController </span><span class="s2">{</span>
+
+    <span class="s1">@Autowired</span>
+    <span class="s1">VoteService voteService</span><span class="s2">;</span>
+
+    <span class="s1">@ModelAttribute</span><span class="s2">(</span><span class="s3">&quot;lstVote&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Vote</span><span class="s2">&gt; </span><span class="s1">getVote</span><span class="s2">(){</span>
+        <span class="s0">return </span><span class="s1">voteService</span><span class="s2">.</span><span class="s1">getAllVotes</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@ModelAttribute</span><span class="s2">(</span><span class="s3">&quot;enumCandidat&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Candidat</span><span class="s2">&gt; </span><span class="s1">getAllCandidats</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">voteService</span><span class="s2">.</span><span class="s1">getAllCandidats</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@GetMapping</span>
+    <span class="s0">public </span><span class="s1">String getVotePage</span><span class="s2">(</span><span class="s1">Vote vote</span><span class="s2">){</span>
+        <span class="s0">return </span><span class="s3">&quot;view-vote&quot;</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@PostMapping</span>
+    <span class="s0">public </span><span class="s1">String valid</span><span class="s2">(</span><span class="s1">@Valid @ModelAttribute</span><span class="s2">(</span><span class="s3">&quot;vote&quot;</span><span class="s2">) </span><span class="s1">Vote vote</span><span class="s2">, </span><span class="s1">BindingResult errors</span><span class="s2">) {</span>
+
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">errors</span><span class="s2">.</span><span class="s1">hasErrors</span><span class="s2">()) {</span>
+            <span class="s0">return </span><span class="s3">&quot;view-vote&quot;</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Candidat selectedCandidat </span><span class="s2">= </span><span class="s1">vote</span><span class="s2">.</span><span class="s1">getCandidatForVote</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Candidat sélectionné : &quot; </span><span class="s2">+ </span><span class="s1">selectedCandidat</span><span class="s2">);</span>
+            <span class="s1">voteService</span><span class="s2">.</span><span class="s1">addVote</span><span class="s2">(</span><span class="s1">vote</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">VoteServiceException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+        <span class="s0">return </span><span class="s3">&quot;redirect:/vote&quot;</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

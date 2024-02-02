@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="/css/general.css">
+        <title>Page de vote</title>
+    </head>
+    <body>
+        <h2>Votez pour votre candidat préféré :</h2>
+
+        <form data-th-action="@{/vote}" data-th-object="${vote}" method="post">
+            <li>
+                <label for="voterName">Nom de l'électeur :</label>
+                <input type="text" id="voterName" name="voterName" data-th-field="*{name}" required/>
+                <span data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}"/>
+            </li>
+
+            <li>
+                <label for="voterDdn">Date de naissance de l'électeur :</label>
+                <input type="date" id="voterDdn" name="voterDdn" data-th-field="*{ddn}" required/>
+                <span data-th-if="${#fields.hasErrors('ddn')}" data-th-errors="*{ddn}"/>
+            </li>
+
+            <li>
+                <label for="candidate">Candidat :</label>
+                <select id="candidate" name="candidatForVote" required>
+                    <option data-th-each="candidat: ${enumCandidat}"
+                            data-th-value="${candidat}"
+                            data-th-text="${candidat}"></option>
+                </select>
+            </li>
+
+
+            <button type="submit">Voter</button>
+        </form>
+
+        <hr>
+
+        <h2>Résultats des votes :</h2>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nom de l'électeur</th>
+                    <th>Candidat voté</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vote: ${lstVote}">
+                    <td th:text="${vote.name}"></td>
+                    <td th:text="${vote.candidatForVote}"></td>
+
+
+                </tr>
+            </tbody>
+        </table>
+        <a data-th-href="@{/}" >Accueil</a>
+    </body>
+</html>

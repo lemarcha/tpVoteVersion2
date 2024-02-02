@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <title>Login page</title>
+  </head>
+  <body>
+    <h1>Login page</h1>
+	<p data-th-text="${#ctx.session.currentUser != null} ? ${#ctx.session.currentUser} : 'Non connecté!'"/>
+    <form th:action="@{/login}" method="post">
+      <label for="pseudo">Username</label>:
+      <input type="text" id="pseudo" name="username" autofocus="autofocus" /> <br />
+      <label for="mdp">Password</label>:
+      <input type="password" name="password" id="mdp" /> <br />
+      <input type="submit" value="Log in" />
+    </form>
+    <a data-th-href="@{/}" >Accueil</a>
+  </body>
+</html>
